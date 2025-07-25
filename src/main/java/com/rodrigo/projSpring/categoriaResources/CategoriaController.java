@@ -1,6 +1,10 @@
 package com.rodrigo.projSpring.categoriaResources;
 
 import com.rodrigo.projSpring.dominio.Categoria;
+import com.rodrigo.projSpring.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,17 +16,13 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class  CategoriaController {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List listar(){
+    @Autowired
+    private CategoriaService service;
 
-        Categoria cat1 = new Categoria(1, "Informatica");
-        Categoria cat2 = new Categoria(2, "Escritótio");
-
-        List<Categoria> lista = new ArrayList<>();
-        lista.add(cat1);
-        lista.add(cat2);
-
-        return lista;
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> find(@PathVariable Integer id){
+        Categoria obj = service.buscar(id);
+        return ResponseEntity.ok().body(obj);
     }
 
 }

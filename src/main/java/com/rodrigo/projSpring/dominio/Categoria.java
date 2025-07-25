@@ -1,11 +1,19 @@
 package com.rodrigo.projSpring.dominio;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Categoria implements Serializable { //serializable enviar dados convertidos em seguencia de bits
     private static final long serialVersiionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //define a geração automatica de id
     private Integer id;
     private String nome;
 
