@@ -1,6 +1,5 @@
 package com.rodrigo.projSpring.dominio;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,23 +8,20 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Categoria implements Serializable { //serializable enviar dados convertidos em seguencia de bits
+public class Estado implements Serializable { //serializable enviar dados convertidos em seguencia de bits
     private static final long serialVersiionUID = 1L;
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //define a geração automatica de id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
 
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "categorias")
-    private List<Produtos> produtos = new ArrayList<>();
+    @OneToMany(mappedBy = "estado")
+    private List<Cidade> cidades = new ArrayList<>();
 
-
-    public Categoria() {
+    public Estado(){
     }
 
-    public Categoria(Integer id, String nome) {
+    public Estado(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
@@ -46,25 +42,23 @@ public class Categoria implements Serializable { //serializable enviar dados con
         this.nome = nome;
     }
 
-    public List<Produtos> getProdutos() {
-        return produtos;
+    public List<Cidade> getCidades() {
+        return cidades;
     }
 
-    public void setProdutos(List<Produtos> produtos) {
-        this.produtos = produtos;
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Categoria categoria = (Categoria) o;
-        return Objects.equals(id, categoria.id) && Objects.equals(nome, categoria.nome);
+        Estado estado = (Estado) o;
+        return Objects.equals(id, estado.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
     }
-
-
 }
