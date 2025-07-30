@@ -1,11 +1,10 @@
 package com.rodrigo.projSpring.dominio;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,6 +15,10 @@ public class Categoria implements Serializable { //serializable enviar dados con
     @GeneratedValue(strategy = GenerationType.IDENTITY) //define a geração automatica de id
     private Integer id;
     private String nome;
+
+    @ManyToMany(mappedBy = "categorias")
+    private List<Produtos> produtos = new ArrayList<>();
+
 
     public Categoria() {
     }
@@ -41,6 +44,14 @@ public class Categoria implements Serializable { //serializable enviar dados con
         this.nome = nome;
     }
 
+    public List<Produtos> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produtos> produtos) {
+        this.produtos = produtos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -52,4 +63,6 @@ public class Categoria implements Serializable { //serializable enviar dados con
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
+
 }
